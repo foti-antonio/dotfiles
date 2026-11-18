@@ -1,0 +1,25 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 24,
+  "spacing": 8,
+  "modules-left": ["ext/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": ["pulseaudio", "cpu", "memory", "tray"],
+
+  "ext/workspaces": {
+    "format": "{name}",
+    "on-click": "activate",
+    "sort-by-id": true,
+    "ignore-hidden": false
+  },
+  "clock": { "format": "{:%a %d %b  %H:%M}", "tooltip": false },
+  "pulseaudio": {
+    "format": "VOL {volume}%",
+    "format-muted": "VOL muted",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+  },
+  "cpu": { "format": "CPU {usage}%", "interval": 5 },
+  "memory": { "format": "MEM {percentage}%", "interval": 10 },
+  "tray": { "spacing": 6 }
+}
