@@ -11,5 +11,7 @@ window#waybar { background: #1d2021; color: #ebdbb2; }
 #workspaces button.hidden { color: #504945; }
 #workspaces button.active { color: #1d2021; background: #a89984; }
 #workspaces button.urgent { color: #1d2021; background: #cc241d; }
-#clock, #pulseaudio, #cpu, #memory, #tray { padding: 0 6px; }
+#clock, #pulseaudio, #cpu, #memory, #battery, #tray { padding: 0 6px; }
 #pulseaudio.muted { color: #7c6f64; }
+#battery.warning:not(.charging) { color: #d79921; }
+#battery.critical:not(.charging) { color: #cc241d; }

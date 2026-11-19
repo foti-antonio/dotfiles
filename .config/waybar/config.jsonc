@@ -5,7 +5,7 @@
   "spacing": 8,
   "modules-left": ["ext/workspaces"],
   "modules-center": ["clock"],
-  "modules-right": ["pulseaudio", "cpu", "memory", "tray"],
+  "modules-right": ["pulseaudio", "cpu", "memory", "battery", "tray"],
 
   "ext/workspaces": {
     "format": "{name}",
@@ -21,5 +21,13 @@
   },
   "cpu": { "format": "CPU {usage}%", "interval": 5 },
   "memory": { "format": "MEM {percentage}%", "interval": 10 },
+  "battery": {
+    "format": "BAT {capacity}%",
+    "format-charging": "BAT {capacity}% +",
+    "format-plugged": "BAT {capacity}% +",
+    "states": { "warning": 20, "critical": 10 },
+    "interval": 30,
+    "tooltip-format": "{timeTo}"
+  },
   "tray": { "spacing": 6 }
 }
