@@ -1,23 +1,40 @@
+/* rofi — app launcher (SUPER+d or SUPER+space in mango).
+   Docs: `man 1 rofi` for the configuration block, `man 5 rofi-theme` for
+   everything else. Changes apply the next time rofi is opened. */
+
+/* Throw away rofi's built-in theme, so the look comes only from the rules
+   in this file. */
 @theme "/dev/null"
 
+/* Behaviour. */
 configuration {
+  /* Font as "family size" (size in points). */
   font: "JetBrainsMono Nerd Font 11";
+  /* No app icons next to the names. */
   show-icons: false;
+  /* Prompt text shown in "drun" mode (the app list) instead of "drun". */
   display-drun: "run";
+  /* What to print for each app: only its name ({generic}, {comment}, {exec}
+     are also available). */
   drun-display-format: "{name}";
 }
 
+/* Look. Each block styles one widget; "*" applies to all of them. */
 * {
+  /* Custom colour names, used below as @bg, @fg, ... (gruvbox dark, as in
+     the other configs). */
   bg:     #1d2021;
   bg-alt: #3c3836;
   fg:     #ebdbb2;
   dim:    #7c6f64;
   accent: #a89984;
 
+  /* Defaults for every widget: no background of its own, light text. */
   background-color: transparent;
   text-color: @fg;
 }
 
+/* The popup window. */
 window {
   width: 480px;
   background-color: @bg;
@@ -26,19 +43,34 @@ window {
   border-radius: 4px;
 }
 
+/* Contents of the window: the search bar on top, the result list below.
+   padding = space around the contents, spacing = space between the children. */
 mainbox  { padding: 8px; spacing: 8px; children: [ inputbar, listview ]; }
+/* Search bar: the prompt ("run") followed by the text field. */
 inputbar { padding: 6px; background-color: @bg-alt; border-radius: 4px; children: [ prompt, entry ]; spacing: 8px; }
 prompt   { text-color: @accent; }
+/* The text field. placeholder is the hint shown while it is empty; "" = none. */
 entry    { placeholder: ""; }
+/* Result list: at most 8 rows, no scrollbar. fixed-height false lets the
+   window shrink when fewer than 8 results match. */
 listview { lines: 8; scrollbar: false; fixed-height: false; }
+/* One row of the list. */
 element  { padding: 4px 6px; border-radius: 4px; }
+/* The text inside a row takes the row's colour, so the rules below apply. */
 element-text { text-color: inherit; }
+
+/* Row colours. Each row has a position (normal / alternate = odd / even rows,
+   selected = the highlighted one) and a state (normal, active, urgent). */
+/* Plain rows: odd and even look the same. */
 element normal.normal,
 element alternate.normal { background-color: @bg; text-color: @fg; }
+/* Active rows (e.g. the current window in window mode): accent text. */
 element normal.active,
 element alternate.active { background-color: @bg; text-color: @accent; }
+/* Urgent rows: red text. */
 element normal.urgent,
 element alternate.urgent { background-color: @bg; text-color: #cc241d; }
+/* The highlighted row: inverted colours, whatever its state. */
 element selected.normal,
 element selected.active,
 element selected.urgent  { background-color: @accent; text-color: @bg; }

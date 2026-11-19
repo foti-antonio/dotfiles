@@ -1,33 +1,89 @@
+// waybar — the status bar. Docs: `man 5 waybar`, plus one page per module
+// (`man 5 waybar-battery`, `man 5 waybar-clock`, ...).
+// This file says WHAT the bar shows; style.css says how it looks.
+// Restart waybar to apply changes: `pkill waybar; waybar &`
 {
+  // Stacking layer: "top" keeps the bar above normal windows ("bottom" would
+  // let windows cover it). Fullscreen windows still cover it.
   "layer": "top",
+  // Screen edge the bar sits on: top, bottom, left or right.
   "position": "top",
+  // Bar height in pixels.
   "height": 24,
+  // Space between modules, in pixels.
   "spacing": 8,
+
+  // Which modules go in which third of the bar, in order. Each one is
+  // configured in its own block below.
   "modules-left": ["ext/workspaces"],
   "modules-center": ["clock"],
   "modules-right": ["pulseaudio", "cpu", "memory", "battery", "tray"],
 
+  // Tags 1-9, read from mango through the ext-workspace protocol.
   "ext/workspaces": {
+    // Text of each button: {name} is the tag name (its number).
     "format": "{name}",
+    // Clicking a button switches to that tag.
     "on-click": "activate",
+    // Order the buttons by tag number.
     "sort-by-id": true,
+    // mango flags empty tags as "hidden". false = show them anyway, so all
+    // nine are always on the bar (style.css dims them).
     "ignore-hidden": false
   },
-  "clock": { "format": "{:%a %d %b  %H:%M}", "tooltip": false },
+
+  "clock": {
+    // strftime-style codes: %a weekday, %d day, %b month, %H:%M 24h time
+    // → "Thu 19 Nov  22:17".
+    "format": "{:%a %d %b  %H:%M}",
+    // No popup when hovering.
+    "tooltip": false
+  },
+
+  // Volume. Talks to PipeWire through its PulseAudio interface. Scrolling on
+  // it changes the volume.
   "pulseaudio": {
+    // {volume} is the output volume in percent.
     "format": "VOL {volume}%",
+    // Text shown instead when the output is muted.
     "format-muted": "VOL muted",
+    // Clicking toggles mute.
     "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
   },
-  "cpu": { "format": "CPU {usage}%", "interval": 5 },
-  "memory": { "format": "MEM {percentage}%", "interval": 10 },
+
+  "cpu": {
+    // {usage} is the total CPU load in percent.
+    "format": "CPU {usage}%",
+    // Refresh every 5 seconds.
+    "interval": 5
+  },
+
+  "memory": {
+    // {percentage} is the share of RAM in use.
+    "format": "MEM {percentage}%",
+    // Refresh every 10 seconds.
+    "interval": 10
+  },
+
   "battery": {
+    // {capacity} is the charge in percent.
     "format": "BAT {capacity}%",
+    // format-<status> replaces "format" in that status: a trailing + while
+    // charging, and while plugged in but not charging (battery full).
     "format-charging": "BAT {capacity}% +",
     "format-plugged": "BAT {capacity}% +",
+    // Named thresholds: at 20% or less the module gets the CSS class
+    // "warning", at 10% or less "critical". style.css colours them.
     "states": { "warning": 20, "critical": 10 },
+    // Refresh every 30 seconds.
     "interval": 30,
+    // Hover text: estimated time until empty or full.
     "tooltip-format": "{timeTo}"
   },
-  "tray": { "spacing": 6 }
+
+  // System tray: icons of background apps (network, bluetooth, chat, ...).
+  "tray": {
+    // Space between icons, in pixels.
+    "spacing": 6
+  }
 }
