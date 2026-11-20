@@ -1,9 +1,9 @@
 # dotfiles
 
 Minimal mangowm setup (scroller layout, light animations), waybar, mako, foot, rofi.
-Font: JetBrainsMono Nerd Font (`ttf-jetbrains-mono-nerd`).
+Font: JetBrainsMono Nerd Font (`ttf-jetbrains-mono-nerd`); the bar icons are glyphs of this font.
 
-Packages: `mangowm waybar mako foot rofi swaybg grim slurp wl-clipboard brightnessctl ttf-jetbrains-mono-nerd`
+Packages: `mangowm waybar mako foot rofi swaybg grim slurp wl-clipboard brightnessctl networkmanager bluez-utils bluetui ttf-jetbrains-mono-nerd`
 
 Install: copy `.config/*` to `~/.config/`.
 
@@ -50,6 +50,16 @@ Colours are gruvbox dark in all of them.
 | `SHIFT` + `Print` | Screenshot of the screen to `~/Pictures/Screenshots/` (create the folder first) |
 | `SUPER` + `SHIFT` + `r` | Reload mango config |
 | `SUPER` + `SHIFT` + `e` | Exit mango |
+
+## Bar
+
+| Module | Shows | Mouse |
+| --- | --- | --- |
+| Wi-Fi | Network name and signal | Click: pick a network (nmtui). Right click: Wi-Fi on/off |
+| Bluetooth | Connected device | Click: pair/connect devices (bluetui). Right click: Bluetooth on/off |
+| Brightness | Screen brightness | Scroll: ±5% |
+| Volume | Output volume | Scroll: volume. Click: mute |
+| CPU, memory, battery | CPU load, RAM in use, battery charge | |
 
 ## Applying changes
 

@@ -2,6 +2,9 @@
 // (`man 5 waybar-battery`, `man 5 waybar-clock`, ...).
 // This file says WHAT the bar shows; style.css says how it looks.
 // Restart waybar to apply changes: `pkill waybar; waybar &`
+// The icons are glyphs of the Nerd Font set in style.css; each one is named
+// in the comment above it (search the name on nerdfonts.com/cheat-sheet).
+// Two spaces follow each icon: the glyphs are wider than a letter.
 {
   // Stacking layer: "top" keeps the bar above normal windows ("bottom" would
   // let windows cover it). Fullscreen windows still cover it.
@@ -17,7 +20,7 @@
   // configured in its own block below.
   "modules-left": ["ext/workspaces"],
   "modules-center": ["clock"],
-  "modules-right": ["pulseaudio", "cpu", "memory", "battery", "tray"],
+  "modules-right": ["network", "bluetooth", "backlight", "pulseaudio", "cpu", "memory", "battery", "tray"],
 
   // Tags 1-9, read from mango through the ext-workspace protocol.
   "ext/workspaces": {
@@ -40,38 +43,111 @@
     "tooltip": false
   },
 
+  // Wi-Fi. Left click opens nmtui (NetworkManager's terminal UI) to pick a
+  // network; right click turns the Wi-Fi radio off and on.
+  "network": {
+    // Only look at wireless interfaces (wlan0). Without this the module could
+    // show t2_ncm, the MacBook's internal link to its T2 chip.
+    "interface": "wl*",
+    // Connected: icon nf-md-wifi, {essid} is the network name,
+    // {signalStrength} the signal in percent.
+    "format-wifi": "󰖩  {essid} {signalStrength}%",
+    // Radio on, but not connected to any network.
+    "format-disconnected": "󰖩  --",
+    // Radio switched off (rfkill): icon nf-md-wifi_off.
+    "format-disabled": "󰖪",
+    // Cut the text after this many characters, for long network names.
+    "max-length": 28,
+    // Refresh (signal strength) every 10 seconds.
+    "interval": 10,
+    // Hover text: interface, IP address/prefix, band.
+    "tooltip-format-wifi": "{ifname}  {ipaddr}/{cidr}  {frequency} GHz",
+    // --app-id names the window so mango can float it (window rules in
+    // mango/config.conf); -e runs the command inside foot.
+    "on-click": "foot --app-id=nmtui -e nmtui",
+    // `nmcli radio wifi` prints "enabled" or "disabled"; switch to the other.
+    "on-click-right": "[ \"$(nmcli radio wifi)\" = enabled ] && nmcli radio wifi off || nmcli radio wifi on"
+  },
+
+  // Bluetooth. Left click opens bluetui to pair and connect devices; right
+  // click turns the adapter off and on.
+  "bluetooth": {
+    // Adapter on, nothing connected: icon nf-md-bluetooth.
+    "format": "󰂯",
+    // Icon nf-md-bluetooth_connect; {device_alias} is the name of the
+    // connected device.
+    "format-connected": "󰂱  {device_alias}",
+    // Same, for devices that report their battery level.
+    "format-connected-battery": "󰂱  {device_alias} {device_battery_percentage}%",
+    // Adapter powered off / blocked by rfkill: icon nf-md-bluetooth_off.
+    "format-off": "󰂲",
+    "format-disabled": "󰂲",
+    // No adapter at all: empty text hides the module.
+    "format-no-controller": "",
+    // Cut the text after this many characters, for long device names.
+    "max-length": 24,
+    // Hover text: every connected device, one per line.
+    "tooltip-format-connected": "{device_enumerate}",
+    "on-click": "foot --app-id=bluetui -e bluetui",
+    // "Powered: yes" in `bluetoothctl show` means the adapter is on.
+    "on-click-right": "bluetoothctl show | grep -q 'Powered: yes' && bluetoothctl power off || bluetoothctl power on"
+  },
+
+  // Screen brightness. Scrolling on it changes the brightness.
+  "backlight": {
+    // Which backlight to show and change. Named explicitly because this
+    // MacBook has two (the other is the Touch Bar); list them with
+    // `brightnessctl -l`.
+    "device": "gmux_backlight",
+    // Icon nf-md-brightness_6; {percent} is the brightness in percent.
+    "format": "󰃟  {percent}%",
+    // Each scroll step changes the brightness by 5 percentage points, like
+    // the brightness keys.
+    "scroll-step": 5,
+    // Scrolling down stops at 5%, so the screen cannot be turned off by
+    // accident.
+    "min-brightness": 5,
+    // No popup when hovering.
+    "tooltip": false
+  },
+
   // Volume. Talks to PipeWire through its PulseAudio interface. Scrolling on
   // it changes the volume.
   "pulseaudio": {
-    // {volume} is the output volume in percent.
-    "format": "VOL {volume}%",
-    // Text shown instead when the output is muted.
-    "format-muted": "VOL muted",
+    // Icon nf-md-volume_high; {volume} is the output volume in percent.
+    "format": "󰕾  {volume}%",
+    // Shown instead when the output is muted: icon nf-md-volume_off.
+    "format-muted": "󰖁",
     // Clicking toggles mute.
     "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
   },
 
   "cpu": {
-    // {usage} is the total CPU load in percent.
-    "format": "CPU {usage}%",
+    // Icon nf-oct-cpu; {usage} is the total CPU load in percent.
+    "format": "  {usage}%",
     // Refresh every 5 seconds.
     "interval": 5
   },
 
   "memory": {
-    // {percentage} is the share of RAM in use.
-    "format": "MEM {percentage}%",
+    // Icon nf-fa-memory; {percentage} is the share of RAM in use.
+    "format": "  {percentage}%",
     // Refresh every 10 seconds.
     "interval": 10
   },
 
   "battery": {
-    // {capacity} is the charge in percent.
-    "format": "BAT {capacity}%",
-    // format-<status> replaces "format" in that status: a trailing + while
-    // charging, and while plugged in but not charging (battery full).
-    "format-charging": "BAT {capacity}% +",
-    "format-plugged": "BAT {capacity}% +",
+    // {icon} is picked from format-icons below; {capacity} is the charge in
+    // percent.
+    "format": "{icon}  {capacity}%",
+    // One icon per charge level, from empty to full (nf-md-battery_10 ...
+    // nf-md-battery_90, nf-md-battery): the list is spread evenly over 0-100%.
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    // format-<status> replaces "format" in that status: the icon
+    // nf-md-battery_charging while charging, and while plugged in but not
+    // charging (battery full).
+    "format-charging": "󰂄  {capacity}%",
+    "format-plugged": "󰂄  {capacity}%",
     // Named thresholds: at 20% or less the module gets the CSS class
     // "warning", at 10% or less "critical". style.css colours them.
     "states": { "warning": 20, "critical": 10 },

@@ -30,8 +30,10 @@ window#waybar { background: #1d2021; color: #ebdbb2; }
 #workspaces button.urgent { color: #1d2021; background: #cc241d; }
 
 /* Same side padding for every module. */
-#clock, #pulseaudio, #cpu, #memory, #battery, #tray { padding: 0 6px; }
+#clock, #network, #bluetooth, #backlight, #pulseaudio, #cpu, #memory, #battery, #tray { padding: 0 6px; }
 
+/* Wi-Fi not connected or switched off, Bluetooth switched off: greyed out. */
+#network.disconnected, #network.disabled, #bluetooth.off, #bluetooth.disabled { color: #7c6f64; }
 /* Muted volume: greyed out. */
 #pulseaudio.muted { color: #7c6f64; }
 /* Low battery: yellow at "warning", red at "critical" (thresholds are the
