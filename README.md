@@ -10,7 +10,10 @@ Colori gruvbox dark ovunque.
    ```
    mangowm waybar mako foot rofi swaybg grim slurp wl-clipboard
    brightnessctl networkmanager bluez-utils bluetui ttf-jetbrains-mono-nerd
+   xdg-desktop-portal-wlr
    ```
+
+   `xdg-desktop-portal-wlr` serve per condividere lo schermo (browser, OBS, videochiamate).
 
 2. Copiare `.config/*` in `~/.config/`.
 
@@ -57,6 +60,8 @@ Ogni impostazione è spiegata da un commento subito sopra, nel file stesso.
 | `SUPER` + trascinamento sinistro | Sposta la finestra                    |
 | `SUPER` + trascinamento destro   | Ridimensiona la finestra              |
 
+Una finestra sola nel tag occupa sempre tutto lo schermo: i tasti della larghezza valgono da due finestre in su.
+
 ### Tag
 
 | Tasti                       | Azione                                              |
@@ -72,7 +77,7 @@ Ogni impostazione è spiegata da un commento subito sopra, nel file stesso.
 | Tasti del volume       | Volume ±5%, muto, muto del microfono                                                   |
 | Tasti della luminosità | Schermo ±5%, tastiera ±10%                                                             |
 | `Print`                | Screenshot di una regione, negli appunti                                               |
-| `SHIFT` + `Print`      | Screenshot dello schermo, in `~/Pictures/Screenshots/` (la cartella deve già esistere) |
+| `SHIFT` + `Print`      | Screenshot dello schermo, in `~/Pictures/Screenshots/`                                 |
 
 ### Sessione
 
