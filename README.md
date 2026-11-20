@@ -3,7 +3,7 @@
 Minimal mangowm setup (scroller layout, light animations), waybar, mako, foot, rofi.
 Font: JetBrainsMono Nerd Font (`ttf-jetbrains-mono-nerd`).
 
-Packages: `mangowm waybar mako foot rofi swaybg grim slurp wl-clipboard ttf-jetbrains-mono-nerd`
+Packages: `mangowm waybar mako foot rofi swaybg grim slurp wl-clipboard brightnessctl ttf-jetbrains-mono-nerd`
 
 Install: copy `.config/*` to `~/.config/`.
 
@@ -45,6 +45,7 @@ Colours are gruvbox dark in all of them.
 | `SUPER` + scroll wheel | Previous/next tag that has windows |
 | `SUPER` + left-drag / right-drag | Move / resize window |
 | Volume keys | Volume ±5%, mute, mic mute |
+| Brightness keys | Screen ±5%, keyboard backlight ±10% |
 | `Print` | Screenshot of a region to the clipboard |
 | `SHIFT` + `Print` | Screenshot of the screen to `~/Pictures/Screenshots/` (create the folder first) |
 | `SUPER` + `SHIFT` + `r` | Reload mango config |
