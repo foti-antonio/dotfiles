@@ -1,23 +1,31 @@
-# mako — demone delle notifiche (i popup inviati dalle app).
-# Documentazione: `man 5 mako`
-# I commenti devono stare su una riga a sé. Applicare le modifiche con
-# `makoctl reload`, provare con `notify-send "titolo" "testo"`.
+# mako — notifiche (i popup inviati dalle app)
+#
+#   Documentazione   `man 5 mako`
+#   Ricarica         `makoctl reload`
+#   Prova            `notify-send "titolo" "testo"`
+#
+# I commenti devono stare su una riga a sé.
 
-# Angolo dello schermo in cui compaiono le notifiche.
+# Angolo dello schermo in cui compaiono.
 anchor=top-right
-# Font come "famiglia dimensione" (dimensione in punti).
+
+# Font: "famiglia dimensione", dimensione in punti.
 font=JetBrainsMono Nerd Font 10
-# I colori sono #RRGGBB (gruvbox dark, come nelle altre configurazioni).
+
+# Colori in formato #RRGGBB (gruvbox dark, come nelle altre configurazioni).
 background-color=#1d2021
 text-color=#ebdbb2
 border-color=#a89984
+
 # Spessore del bordo, in pixel.
 border-size=2
-# Arrotondamento degli angoli, in pixel.
+
+# Angoli arrotondati, in pixel.
 border-radius=4
-# Millisecondi prima che una notifica scompaia da sola (0 = mai), a meno che
-# l'app non chieda una durata propria.
+
+# Durata in millisecondi (0 = non scompare da sola). Vale se l'app non ne
+# chiede una propria.
 default-timeout=5000
-# Al massimo questo numero di notifiche sullo schermo contemporaneamente; le
-# più vecchie restano nascoste finché non c'è spazio.
+
+# Massimo di notifiche visibili insieme; le più vecchie aspettano nascoste.
 max-visible=3

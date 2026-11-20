@@ -1,45 +1,64 @@
-/* waybar — l'aspetto della barra. Questo è CSS di GTK, un sottoinsieme del
-   CSS del web.
-   Documentazione: `man 5 waybar-styles`; la pagina man di ogni modulo ne
-   elenca i selettori.
-   I colori sono la palette gruvbox dark, condivisa con mango, mako e rofi. */
+/* waybar — aspetto della barra (COSA mostra è in config.jsonc)
 
-/* Valori predefiniti per ogni elemento della barra. */
+     Documentazione   `man 5 waybar-styles`; i selettori di ogni modulo sono
+                      nella sua pagina man
+     Ricarica         `pkill waybar; waybar &`
+
+   È CSS di GTK, un sottoinsieme del CSS del web.
+   Colori: palette gruvbox dark, la stessa di mango, mako e rofi. */
+
+
+/* ── Tutta la barra ────────────────────────────────────── */
+
+/* Valori di partenza per ogni elemento. */
 * {
-  /* Viene usato il primo font installato. */
+  /* Si usa il primo font installato della lista. */
   font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", monospace;
   font-size: 12px;
-  /* Rimuove i bordi e gli angoli arrotondati che il tema GTK aggiungerebbe. */
+
+  /* Via i bordi e gli angoli arrotondati che aggiungerebbe il tema GTK. */
   border: none;
   border-radius: 0;
-  /* I pulsanti GTK hanno un'altezza minima che renderebbe la barra più alta
+
+  /* Senza, l'altezza minima dei pulsanti GTK renderebbe la barra più alta
      dei 24px impostati in config.jsonc. */
   min-height: 0;
+
   /* Nessuna dissolvenza al passaggio del mouse o al cambio di stato. */
   transition: none;
 }
 
-/* La barra vera e propria: sfondo scuro, testo chiaro. */
+/* Sfondo scuro, testo chiaro. */
 window#waybar { background: #1d2021; color: #ebdbb2; }
 
-/* Pulsanti dei tag. Il padding è "verticale orizzontale": 6px a sinistra e a
-   destra. */
+
+/* ── Tag ───────────────────────────────────────────────── */
+
+/* Pulsanti dei tag. padding è "verticale orizzontale": 6px ai lati. */
 #workspaces button { padding: 0 6px; color: #ebdbb2; background: transparent; }
+
 /* Tag vuoto: attenuato. */
 #workspaces button.hidden { color: #504945; }
-/* Il tag sullo schermo: colori invertiti. */
+
+/* Tag sullo schermo: colori invertiti. */
 #workspaces button.active { color: #1d2021; background: #a89984; }
-/* Un tag con una finestra che richiede attenzione: rosso. */
+
+/* Tag con una finestra che richiede attenzione: rosso. */
 #workspaces button.urgent { color: #1d2021; background: #cc241d; }
 
-/* Stesso padding laterale per ogni modulo. */
+
+/* ── Moduli ────────────────────────────────────────────── */
+
+/* Stesso spazio ai lati per tutti. */
 #clock, #network, #bluetooth, #backlight, #pulseaudio, #cpu, #memory, #battery, #tray { padding: 0 6px; }
 
-/* Wi-Fi non connesso o spento, Bluetooth spento: in grigio. */
+/* Wi-Fi non connesso o spento, Bluetooth spento: grigio. */
 #network.disconnected, #network.disabled, #bluetooth.off, #bluetooth.disabled { color: #7c6f64; }
-/* Volume silenziato: in grigio. */
+
+/* Volume silenziato: grigio. */
 #pulseaudio.muted { color: #7c6f64; }
-/* Batteria scarica: giallo a "warning", rosso a "critical" (le soglie sono
-   gli "states" in config.jsonc), ma non durante la carica. */
+
+/* Batteria scarica: gialla a "warning", rossa a "critical", ma non durante
+   la carica. Le soglie sono gli "states" in config.jsonc. */
 #battery.warning:not(.charging) { color: #d79921; }
 #battery.critical:not(.charging) { color: #cc241d; }
