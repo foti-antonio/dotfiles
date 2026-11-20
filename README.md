@@ -1,71 +1,71 @@
 # dotfiles
 
-Minimal mangowm setup (scroller layout, light animations), waybar, mako, foot, rofi.
-Font: JetBrainsMono Nerd Font (`ttf-jetbrains-mono-nerd`); the bar icons are glyphs of this font.
+Configurazione minimale di mangowm (layout scroller, animazioni leggere), waybar, mako, foot, rofi.
+Font: JetBrainsMono Nerd Font (`ttf-jetbrains-mono-nerd`); le icone della barra sono glifi di questo font.
 
-Packages: `mangowm waybar mako foot rofi swaybg grim slurp wl-clipboard brightnessctl networkmanager bluez-utils bluetui ttf-jetbrains-mono-nerd`
+Pacchetti: `mangowm waybar mako foot rofi swaybg grim slurp wl-clipboard brightnessctl networkmanager bluez-utils bluetui ttf-jetbrains-mono-nerd`
 
-Install: copy `.config/*` to `~/.config/`.
+Installazione: copiare `.config/*` in `~/.config/`.
 
-## What is where
+## Cosa si trova dove
 
-Every setting is explained by a comment right above it in the file itself.
+Ogni impostazione è spiegata da un commento subito sopra di essa, nel file stesso.
 
-| File | Program | What it controls |
+| File | Programma | Cosa controlla |
 | --- | --- | --- |
-| `.config/mango/config.conf` | mangowm (compositor) | Monitor, autostart, look, animations, layout, input, all key and mouse bindings |
-| `.config/waybar/config.jsonc` | waybar (status bar) | Which modules the bar shows and what they print |
-| `.config/waybar/style.css` | waybar | Fonts, colours and spacing of the bar |
-| `.config/mako/config` | mako (notifications) | Position, colours and timeout of notification popups |
-| `.config/foot/foot.ini` | foot (terminal) | Terminal font |
-| `.config/rofi/config.rasi` | rofi (launcher) | Launcher behaviour and look |
+| `.config/mango/config.conf` | mangowm (compositor) | Monitor, avvio automatico, aspetto, animazioni, layout, input, tutte le scorciatoie di tastiera e mouse |
+| `.config/waybar/config.jsonc` | waybar (barra di stato) | Quali moduli mostra la barra e cosa scrivono |
+| `.config/waybar/style.css` | waybar | Font, colori e spaziatura della barra |
+| `.config/mako/config` | mako (notifiche) | Posizione, colori e durata dei popup di notifica |
+| `.config/foot/foot.ini` | foot (terminale) | Font del terminale |
+| `.config/rofi/config.rasi` | rofi (launcher) | Comportamento e aspetto del launcher |
 
-Colours are gruvbox dark in all of them.
+I colori sono gruvbox dark in tutti i file.
 
-## Keys
+## Tasti
 
-`SUPER` is the Windows key. Direction keys are `h` `j` `k` `l` or the arrows.
+`SUPER` è il tasto Windows. I tasti direzionali sono `h` `j` `k` `l` oppure le frecce.
 
-| Keys | Action |
+| Tasti | Azione |
 | --- | --- |
-| `SUPER` + `Return` | Terminal (foot) |
-| `SUPER` + `d` or `space` | App launcher (rofi) |
+| `SUPER` + `Return` | Terminale (foot) |
+| `SUPER` + `d` o `space` | Launcher delle app (rofi) |
 | `SUPER` + `SHIFT` + `Return` | Firefox |
-| `SUPER` + `SHIFT` + `n` | File manager (nautilus) |
-| `SUPER` + `w` | Close window |
-| `SUPER` + direction | Focus the window in that direction |
-| `SUPER` + `SHIFT` + direction | Swap the window with its neighbour |
-| `SUPER` + `f` | Fullscreen on/off |
-| `SUPER` + `SHIFT` + `space` | Floating on/off |
-| `SUPER` + `r` | Cycle window width: 50% → 80% → 100% |
-| `SUPER` + `SHIFT` + `f` | Window width 100% |
-| `SUPER` + `Tab` | Overview of all windows |
-| `SUPER` + `1`…`9` | Go to tag 1…9 |
-| `SUPER` + `SHIFT` + `1`…`9` | Send window to tag 1…9 |
-| `SUPER` + scroll wheel | Previous/next tag that has windows |
-| `SUPER` + left-drag / right-drag | Move / resize window |
-| Volume keys | Volume ±5%, mute, mic mute |
-| Brightness keys | Screen ±5%, keyboard backlight ±10% |
-| `Print` | Screenshot of a region to the clipboard |
-| `SHIFT` + `Print` | Screenshot of the screen to `~/Pictures/Screenshots/` (create the folder first) |
-| `SUPER` + `SHIFT` + `r` | Reload mango config |
-| `SUPER` + `SHIFT` + `e` | Exit mango |
+| `SUPER` + `SHIFT` + `n` | Gestore file (nautilus) |
+| `SUPER` + `w` | Chiude la finestra |
+| `SUPER` + direzione | Sposta il focus sulla finestra in quella direzione |
+| `SUPER` + `SHIFT` + direzione | Scambia la finestra con quella vicina |
+| `SUPER` + `f` | Schermo intero sì/no |
+| `SUPER` + `SHIFT` + `space` | Finestra flottante sì/no |
+| `SUPER` + `r` | Alterna la larghezza della finestra: 50% → 80% → 100% |
+| `SUPER` + `SHIFT` + `f` | Larghezza della finestra al 100% |
+| `SUPER` + `Tab` | Panoramica di tutte le finestre |
+| `SUPER` + `1`…`9` | Va al tag 1…9 |
+| `SUPER` + `SHIFT` + `1`…`9` | Manda la finestra al tag 1…9 |
+| `SUPER` + rotellina | Tag precedente/successivo che contiene finestre |
+| `SUPER` + trascinamento sinistro / destro | Sposta / ridimensiona la finestra |
+| Tasti del volume | Volume ±5%, muto, muto del microfono |
+| Tasti della luminosità | Schermo ±5%, retroilluminazione della tastiera ±10% |
+| `Print` | Screenshot di una regione negli appunti |
+| `SHIFT` + `Print` | Screenshot dello schermo in `~/Pictures/Screenshots/` (creare prima la cartella) |
+| `SUPER` + `SHIFT` + `r` | Ricarica la configurazione di mango |
+| `SUPER` + `SHIFT` + `e` | Esce da mango |
 
-## Bar
+## Barra
 
-| Module | Shows | Mouse |
+| Modulo | Mostra | Mouse |
 | --- | --- | --- |
-| Wi-Fi | Network name and signal | Click: pick a network (nmtui). Right click: Wi-Fi on/off |
-| Bluetooth | Connected device | Click: pair/connect devices (bluetui). Right click: Bluetooth on/off |
-| Brightness | Screen brightness | Scroll: ±5% |
-| Volume | Output volume | Scroll: volume. Click: mute |
-| CPU, memory, battery | CPU load, RAM in use, battery charge | |
+| Wi-Fi | Nome della rete e segnale | Clic: sceglie una rete (nmtui). Clic destro: Wi-Fi acceso/spento |
+| Bluetooth | Dispositivo connesso | Clic: associa/connette i dispositivi (bluetui). Clic destro: Bluetooth acceso/spento |
+| Luminosità | Luminosità dello schermo | Rotellina: ±5% |
+| Volume | Volume di uscita | Rotellina: volume. Clic: muto |
+| CPU, memoria, batteria | Carico della CPU, RAM in uso, carica della batteria | |
 
-## Applying changes
+## Applicare le modifiche
 
-| Program | How |
+| Programma | Come |
 | --- | --- |
-| mango | `SUPER` + `SHIFT` + `r`; check for errors with `mango -c ~/.config/mango/config.conf -p` |
+| mango | `SUPER` + `SHIFT` + `r`; controllare gli errori con `mango -c ~/.config/mango/config.conf -p` |
 | waybar | `pkill waybar; waybar &` |
 | mako | `makoctl reload` |
-| foot, rofi | Open a new one |
+| foot, rofi | Aprirne uno nuovo |

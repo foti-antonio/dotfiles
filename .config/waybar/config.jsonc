@@ -1,165 +1,178 @@
-// waybar — the status bar. Docs: `man 5 waybar`, plus one page per module
-// (`man 5 waybar-battery`, `man 5 waybar-clock`, ...).
-// This file says WHAT the bar shows; style.css says how it looks.
-// Restart waybar to apply changes: `pkill waybar; waybar &`
-// The icons are glyphs of the Nerd Font set in style.css; each one is named
-// in the comment above it (search the name on nerdfonts.com/cheat-sheet).
-// Two spaces follow each icon: the glyphs are wider than a letter.
+// waybar — la barra di stato. Documentazione: `man 5 waybar`, più una pagina
+// per modulo (`man 5 waybar-battery`, `man 5 waybar-clock`, ...).
+// Questo file dice COSA mostra la barra; style.css dice che aspetto ha.
+// Riavviare waybar per applicare le modifiche: `pkill waybar; waybar &`
+// Le icone sono glifi del Nerd Font impostato in style.css; ognuna è indicata
+// per nome nel commento sopra di essa (cercare il nome su
+// nerdfonts.com/cheat-sheet).
+// Ogni icona è seguita da due spazi: i glifi sono più larghi di una lettera.
 {
-  // Stacking layer: "top" keeps the bar above normal windows ("bottom" would
-  // let windows cover it). Fullscreen windows still cover it.
+  // Livello di sovrapposizione: "top" tiene la barra sopra le finestre normali
+  // ("bottom" permetterebbe alle finestre di coprirla). Le finestre a schermo
+  // intero la coprono comunque.
   "layer": "top",
-  // Screen edge the bar sits on: top, bottom, left or right.
+  // Bordo dello schermo su cui sta la barra: top, bottom, left o right.
   "position": "top",
-  // Bar height in pixels.
+  // Altezza della barra in pixel.
   "height": 24,
-  // Space between modules, in pixels.
+  // Spazio tra i moduli, in pixel.
   "spacing": 8,
 
-  // Which modules go in which third of the bar, in order. Each one is
-  // configured in its own block below.
+  // Quali moduli vanno in quale terzo della barra, in ordine. Ognuno è
+  // configurato nel proprio blocco qui sotto.
   "modules-left": ["ext/workspaces"],
   "modules-center": ["clock"],
   "modules-right": ["network", "bluetooth", "backlight", "pulseaudio", "cpu", "memory", "battery", "tray"],
 
-  // Tags 1-9, read from mango through the ext-workspace protocol.
+  // Tag 1-9, letti da mango tramite il protocollo ext-workspace.
   "ext/workspaces": {
-    // Text of each button: {name} is the tag name (its number).
+    // Testo di ogni pulsante: {name} è il nome del tag (il suo numero).
     "format": "{name}",
-    // Clicking a button switches to that tag.
+    // Un clic su un pulsante passa a quel tag.
     "on-click": "activate",
-    // Order the buttons by tag number.
+    // Ordina i pulsanti per numero di tag.
     "sort-by-id": true,
-    // mango flags empty tags as "hidden". false = show them anyway, so all
-    // nine are always on the bar (style.css dims them).
+    // mango segnala i tag vuoti come "hidden". false = li mostra comunque, così
+    // tutti e nove sono sempre sulla barra (style.css li attenua).
     "ignore-hidden": false
   },
 
   "clock": {
-    // strftime-style codes: %a weekday, %d day, %b month, %H:%M 24h time
-    // → "Thu 19 Nov  22:17".
+    // Codici in stile strftime: %a giorno della settimana, %d giorno, %b mese,
+    // %H:%M ora in formato 24h → "Thu 19 Nov  22:17".
     "format": "{:%a %d %b  %H:%M}",
-    // No popup when hovering.
+    // Nessun popup al passaggio del mouse.
     "tooltip": false
   },
 
-  // Wi-Fi. Left click opens nmtui (NetworkManager's terminal UI) to pick a
-  // network; right click turns the Wi-Fi radio off and on.
+  // Wi-Fi. Il clic sinistro apre nmtui (l'interfaccia da terminale di
+  // NetworkManager) per scegliere una rete; il clic destro spegne e riaccende
+  // la radio Wi-Fi.
   "network": {
-    // Only look at wireless interfaces (wlan0). Without this the module could
-    // show t2_ncm, the MacBook's internal link to its T2 chip.
+    // Considera solo le interfacce wireless (wlan0). Senza questa opzione il
+    // modulo potrebbe mostrare t2_ncm, il collegamento interno del MacBook con
+    // il suo chip T2.
     "interface": "wl*",
-    // Connected: icon nf-md-wifi, {essid} is the network name,
-    // {signalStrength} the signal in percent.
+    // Connesso: icona nf-md-wifi, {essid} è il nome della rete,
+    // {signalStrength} il segnale in percentuale.
     "format-wifi": "󰖩  {essid} {signalStrength}%",
-    // Radio on, but not connected to any network.
+    // Radio accesa, ma non connessa ad alcuna rete.
     "format-disconnected": "󰖩  --",
-    // Radio switched off (rfkill): icon nf-md-wifi_off.
+    // Radio spenta (rfkill): icona nf-md-wifi_off.
     "format-disabled": "󰖪",
-    // Cut the text after this many characters, for long network names.
+    // Tronca il testo dopo questo numero di caratteri, per i nomi di rete
+    // lunghi.
     "max-length": 28,
-    // Refresh (signal strength) every 10 seconds.
+    // Aggiorna (intensità del segnale) ogni 10 secondi.
     "interval": 10,
-    // Hover text: interface, IP address/prefix, band.
+    // Testo al passaggio del mouse: interfaccia, indirizzo IP/prefisso, banda.
     "tooltip-format-wifi": "{ifname}  {ipaddr}/{cidr}  {frequency} GHz",
-    // --app-id names the window so mango can float it (window rules in
-    // mango/config.conf); -e runs the command inside foot.
+    // --app-id dà un nome alla finestra, così mango può renderla flottante
+    // (regole delle finestre in mango/config.conf); -e esegue il comando
+    // dentro foot.
     "on-click": "foot --app-id=nmtui -e nmtui",
-    // `nmcli radio wifi` prints "enabled" or "disabled"; switch to the other.
+    // `nmcli radio wifi` stampa "enabled" o "disabled"; passa all'altro stato.
     "on-click-right": "[ \"$(nmcli radio wifi)\" = enabled ] && nmcli radio wifi off || nmcli radio wifi on"
   },
 
-  // Bluetooth. Left click opens bluetui to pair and connect devices; right
-  // click turns the adapter off and on.
+  // Bluetooth. Il clic sinistro apre bluetui per associare e connettere i
+  // dispositivi; il clic destro spegne e riaccende l'adattatore.
   "bluetooth": {
-    // Adapter on, nothing connected: icon nf-md-bluetooth.
+    // Adattatore acceso, niente di connesso: icona nf-md-bluetooth.
     "format": "󰂯",
-    // Icon nf-md-bluetooth_connect; {device_alias} is the name of the
-    // connected device.
+    // Icona nf-md-bluetooth_connect; {device_alias} è il nome del dispositivo
+    // connesso.
     "format-connected": "󰂱  {device_alias}",
-    // Same, for devices that report their battery level.
+    // Lo stesso, per i dispositivi che comunicano il livello della batteria.
     "format-connected-battery": "󰂱  {device_alias} {device_battery_percentage}%",
-    // Adapter powered off / blocked by rfkill: icon nf-md-bluetooth_off.
+    // Adattatore spento / bloccato da rfkill: icona nf-md-bluetooth_off.
     "format-off": "󰂲",
     "format-disabled": "󰂲",
-    // No adapter at all: empty text hides the module.
+    // Nessun adattatore presente: il testo vuoto nasconde il modulo.
     "format-no-controller": "",
-    // Cut the text after this many characters, for long device names.
+    // Tronca il testo dopo questo numero di caratteri, per i nomi di
+    // dispositivo lunghi.
     "max-length": 24,
-    // Hover text: every connected device, one per line.
+    // Testo al passaggio del mouse: tutti i dispositivi connessi, uno per riga.
     "tooltip-format-connected": "{device_enumerate}",
     "on-click": "foot --app-id=bluetui -e bluetui",
-    // "Powered: yes" in `bluetoothctl show` means the adapter is on.
+    // "Powered: yes" in `bluetoothctl show` significa che l'adattatore è
+    // acceso.
     "on-click-right": "bluetoothctl show | grep -q 'Powered: yes' && bluetoothctl power off || bluetoothctl power on"
   },
 
-  // Screen brightness. Scrolling on it changes the brightness.
+  // Luminosità dello schermo. Scorrendo con la rotellina sul modulo la si
+  // cambia.
   "backlight": {
-    // Which backlight to show and change. Named explicitly because this
-    // MacBook has two (the other is the Touch Bar); list them with
+    // Quale retroilluminazione mostrare e modificare. Indicata esplicitamente
+    // perché questo MacBook ne ha due (l'altra è la Touch Bar); elencarle con
     // `brightnessctl -l`.
     "device": "gmux_backlight",
-    // Icon nf-md-brightness_6; {percent} is the brightness in percent.
+    // Icona nf-md-brightness_6; {percent} è la luminosità in percentuale.
     "format": "󰃟  {percent}%",
-    // Each scroll step changes the brightness by 5 percentage points, like
-    // the brightness keys.
+    // Ogni scatto della rotellina cambia la luminosità di 5 punti percentuali,
+    // come i tasti della luminosità.
     "scroll-step": 5,
-    // Scrolling down stops at 5%, so the screen cannot be turned off by
-    // accident.
+    // Scorrendo verso il basso ci si ferma al 5%, così lo schermo non può
+    // essere spento per sbaglio.
     "min-brightness": 5,
-    // No popup when hovering.
+    // Nessun popup al passaggio del mouse.
     "tooltip": false
   },
 
-  // Volume. Talks to PipeWire through its PulseAudio interface. Scrolling on
-  // it changes the volume.
+  // Volume. Comunica con PipeWire tramite la sua interfaccia PulseAudio.
+  // Scorrendo con la rotellina sul modulo si cambia il volume.
   "pulseaudio": {
-    // Icon nf-md-volume_high; {volume} is the output volume in percent.
+    // Icona nf-md-volume_high; {volume} è il volume di uscita in percentuale.
     "format": "󰕾  {volume}%",
-    // Shown instead when the output is muted: icon nf-md-volume_off.
+    // Mostrato al suo posto quando l'uscita è silenziata: icona
+    // nf-md-volume_off.
     "format-muted": "󰖁",
-    // Clicking toggles mute.
+    // Un clic attiva/disattiva il muto.
     "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
   },
 
   "cpu": {
-    // Icon nf-oct-cpu; {usage} is the total CPU load in percent.
+    // Icona nf-oct-cpu; {usage} è il carico totale della CPU in percentuale.
     "format": "  {usage}%",
-    // Refresh every 5 seconds.
+    // Aggiorna ogni 5 secondi.
     "interval": 5
   },
 
   "memory": {
-    // Icon nf-fa-memory; {percentage} is the share of RAM in use.
+    // Icona nf-fa-memory; {percentage} è la quota di RAM in uso.
     "format": "  {percentage}%",
-    // Refresh every 10 seconds.
+    // Aggiorna ogni 10 secondi.
     "interval": 10
   },
 
   "battery": {
-    // {icon} is picked from format-icons below; {capacity} is the charge in
-    // percent.
+    // {icon} viene scelta da format-icons qui sotto; {capacity} è la carica in
+    // percentuale.
     "format": "{icon}  {capacity}%",
-    // One icon per charge level, from empty to full (nf-md-battery_10 ...
-    // nf-md-battery_90, nf-md-battery): the list is spread evenly over 0-100%.
+    // Un'icona per livello di carica, da scarica a piena (nf-md-battery_10 ...
+    // nf-md-battery_90, nf-md-battery): l'elenco è distribuito uniformemente
+    // su 0-100%.
     "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
-    // format-<status> replaces "format" in that status: the icon
-    // nf-md-battery_charging while charging, and while plugged in but not
-    // charging (battery full).
+    // format-<stato> sostituisce "format" in quello stato: l'icona
+    // nf-md-battery_charging durante la carica, e quando è collegata alla
+    // corrente ma non in carica (batteria piena).
     "format-charging": "󰂄  {capacity}%",
     "format-plugged": "󰂄  {capacity}%",
-    // Named thresholds: at 20% or less the module gets the CSS class
-    // "warning", at 10% or less "critical". style.css colours them.
+    // Soglie con nome: al 20% o meno il modulo riceve la classe CSS "warning",
+    // al 10% o meno "critical". style.css le colora.
     "states": { "warning": 20, "critical": 10 },
-    // Refresh every 30 seconds.
+    // Aggiorna ogni 30 secondi.
     "interval": 30,
-    // Hover text: estimated time until empty or full.
+    // Testo al passaggio del mouse: tempo stimato alla scarica o alla carica
+    // completa.
     "tooltip-format": "{timeTo}"
   },
 
-  // System tray: icons of background apps (network, bluetooth, chat, ...).
+  // Area di notifica: icone delle app in background (rete, bluetooth, chat,
+  // ...).
   "tray": {
-    // Space between icons, in pixels.
+    // Spazio tra le icone, in pixel.
     "spacing": 6
   }
 }

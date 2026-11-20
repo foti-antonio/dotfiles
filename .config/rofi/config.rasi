@@ -1,40 +1,43 @@
-/* rofi — app launcher (SUPER+d or SUPER+space in mango).
-   Docs: `man 1 rofi` for the configuration block, `man 5 rofi-theme` for
-   everything else. Changes apply the next time rofi is opened. */
+/* rofi — launcher delle app (SUPER+d o SUPER+space in mango).
+   Documentazione: `man 1 rofi` per il blocco configuration,
+   `man 5 rofi-theme` per tutto il resto. Le modifiche valgono dalla prossima
+   apertura di rofi. */
 
-/* Throw away rofi's built-in theme, so the look comes only from the rules
-   in this file. */
+/* Scarta il tema integrato di rofi, così l'aspetto dipende solo dalle regole
+   di questo file. */
 @theme "/dev/null"
 
-/* Behaviour. */
+/* Comportamento. */
 configuration {
-  /* Font as "family size" (size in points). */
+  /* Font come "famiglia dimensione" (dimensione in punti). */
   font: "JetBrainsMono Nerd Font 11";
-  /* No app icons next to the names. */
+  /* Nessuna icona delle app accanto ai nomi. */
   show-icons: false;
-  /* Prompt text shown in "drun" mode (the app list) instead of "drun". */
+  /* Testo del prompt mostrato in modalità "drun" (l'elenco delle app) al
+     posto di "drun". */
   display-drun: "run";
-  /* What to print for each app: only its name ({generic}, {comment}, {exec}
-     are also available). */
+  /* Cosa scrivere per ogni app: solo il nome (sono disponibili anche
+     {generic}, {comment}, {exec}). */
   drun-display-format: "{name}";
 }
 
-/* Look. Each block styles one widget; "*" applies to all of them. */
+/* Aspetto. Ogni blocco definisce lo stile di un widget; "*" vale per tutti. */
 * {
-  /* Custom colour names, used below as @bg, @fg, ... (gruvbox dark, as in
-     the other configs). */
+  /* Nomi di colore personalizzati, usati sotto come @bg, @fg, ... (gruvbox
+     dark, come nelle altre configurazioni). */
   bg:     #1d2021;
   bg-alt: #3c3836;
   fg:     #ebdbb2;
   dim:    #7c6f64;
   accent: #a89984;
 
-  /* Defaults for every widget: no background of its own, light text. */
+  /* Valori predefiniti per ogni widget: nessuno sfondo proprio, testo
+     chiaro. */
   background-color: transparent;
   text-color: @fg;
 }
 
-/* The popup window. */
+/* La finestra popup. */
 window {
   width: 480px;
   background-color: @bg;
@@ -43,34 +46,40 @@ window {
   border-radius: 4px;
 }
 
-/* Contents of the window: the search bar on top, the result list below.
-   padding = space around the contents, spacing = space between the children. */
+/* Contenuto della finestra: la barra di ricerca in alto, l'elenco dei
+   risultati sotto. padding = spazio attorno al contenuto, spacing = spazio
+   tra i figli. */
 mainbox  { padding: 8px; spacing: 8px; children: [ inputbar, listview ]; }
-/* Search bar: the prompt ("run") followed by the text field. */
+/* Barra di ricerca: il prompt ("run") seguito dal campo di testo. */
 inputbar { padding: 6px; background-color: @bg-alt; border-radius: 4px; children: [ prompt, entry ]; spacing: 8px; }
 prompt   { text-color: @accent; }
-/* The text field. placeholder is the hint shown while it is empty; "" = none. */
+/* Il campo di testo. placeholder è il suggerimento mostrato finché è vuoto;
+   "" = nessuno. */
 entry    { placeholder: ""; }
-/* Result list: at most 8 rows, no scrollbar. fixed-height false lets the
-   window shrink when fewer than 8 results match. */
+/* Elenco dei risultati: al massimo 8 righe, nessuna barra di scorrimento.
+   fixed-height false permette alla finestra di restringersi quando i
+   risultati sono meno di 8. */
 listview { lines: 8; scrollbar: false; fixed-height: false; }
-/* One row of the list. */
+/* Una riga dell'elenco. */
 element  { padding: 4px 6px; border-radius: 4px; }
-/* The text inside a row takes the row's colour, so the rules below apply. */
+/* Il testo dentro una riga prende il colore della riga, così valgono le
+   regole qui sotto. */
 element-text { text-color: inherit; }
 
-/* Row colours. Each row has a position (normal / alternate = odd / even rows,
-   selected = the highlighted one) and a state (normal, active, urgent). */
-/* Plain rows: odd and even look the same. */
+/* Colori delle righe. Ogni riga ha una posizione (normal / alternate = righe
+   dispari / pari, selected = quella evidenziata) e uno stato (normal, active,
+   urgent). */
+/* Righe semplici: dispari e pari hanno lo stesso aspetto. */
 element normal.normal,
 element alternate.normal { background-color: @bg; text-color: @fg; }
-/* Active rows (e.g. the current window in window mode): accent text. */
+/* Righe attive (es. la finestra corrente in modalità window): testo nel
+   colore d'accento. */
 element normal.active,
 element alternate.active { background-color: @bg; text-color: @accent; }
-/* Urgent rows: red text. */
+/* Righe urgenti: testo rosso. */
 element normal.urgent,
 element alternate.urgent { background-color: @bg; text-color: #cc241d; }
-/* The highlighted row: inverted colours, whatever its state. */
+/* La riga evidenziata: colori invertiti, qualunque sia il suo stato. */
 element selected.normal,
 element selected.active,
 element selected.urgent  { background-color: @accent; text-color: @bg; }
